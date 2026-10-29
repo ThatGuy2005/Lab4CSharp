@@ -31,7 +31,7 @@ namespace Lab4CSharp
         {
             try
             {
-                using (var db = new StoreDB())
+                using (var db = new StoreDB2())
                 {
                     try
                     {

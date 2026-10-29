@@ -230,7 +230,7 @@ namespace Lab4CSharp
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem addProduct;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private StoreDB _db;
+        private StoreDB2 _db;
         private BindingSource _bs = new BindingSource();
         private ToolStripMenuItem sell;
         private ToolStripMenuItem search;

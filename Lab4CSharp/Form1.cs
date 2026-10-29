@@ -17,7 +17,7 @@ namespace Lab4CSharp
         {
             InitializeComponent();
 
-            _db = new StoreDB();
+            _db = new StoreDB2();
             addProductForm = new AddProduct();
             addProductForm.Hide();
             modifyProductForm = new ModifyProduct(_db);
@@ -111,7 +111,7 @@ namespace Lab4CSharp
             Task.Run(() =>
             {
                 List<Products> result = new List<Products>();
-                using (var db = new StoreDB())
+                using (var db = new StoreDB2())
                 {
                     var prop = propertyName != null ? typeof(Products).GetProperty(propertyName) : null;
                     if (string.IsNullOrEmpty(text) || propertyName == null)

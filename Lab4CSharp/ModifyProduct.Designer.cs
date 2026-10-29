@@ -114,6 +114,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox productIdentifier;
         private System.Windows.Forms.TextBox addQuantity;
-        private StoreDB _db;
+        private StoreDB2 _db;
     }
 }

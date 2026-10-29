@@ -13,7 +13,7 @@ namespace Lab4CSharp
 {
     public partial class SellForm : Form
     {
-        public SellForm(StoreDB db, int productIdentifier)
+        public SellForm(StoreDB2 db, int productIdentifier)
         {
             InitializeComponent();
             _db = db;

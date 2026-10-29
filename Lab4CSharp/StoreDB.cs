@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Lab4CSharp
 {
-    public class StoreDB : DbContext
+    public class StoreDB2 : DbContext
     {
-        public StoreDB() : base(@"name=StoreDB") { }
+        public StoreDB2() : base(@"name=StoreDB2") { }
         public DbSet<Products> Products { get; set; }
     }
 }

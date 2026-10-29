@@ -94,7 +94,7 @@
         private System.Windows.Forms.Button quit;
         private System.Windows.Forms.Button sell;
 
-        private StoreDB _db;
+        private StoreDB2 _db;
         private Products _product;
         private int productIdentifier;
     }

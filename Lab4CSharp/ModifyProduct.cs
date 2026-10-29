@@ -12,7 +12,7 @@ namespace Lab4CSharp
 {
     public partial class ModifyProduct : Form
     {
-        public ModifyProduct(StoreDB db)
+        public ModifyProduct(StoreDB2 db)
         {
             InitializeComponent();
             _db = db;

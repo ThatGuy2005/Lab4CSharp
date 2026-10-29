@@ -31,28 +31,29 @@ namespace Lab4CSharp
         }
         private void LoadProductsAsync()
         {
-            UseWaitCursor = true;   // UI thread
+            UseWaitCursor = true;
 
             Task.Run(() =>
             {
+                List<Products> products = null;
                 string error = null;
                 try
                 {
-                    _db.Database.Initialize(force: false);   // opens connection, builds model
-                    _db.Products.Load();                     // loads rows into _db.Products.Local
+                    using (var db = new StoreDB2())
+                        products = db.Products.ToList();
                 }
                 catch (Exception ex)
                 {
                     error = ex.GetBaseException().Message;
                 }
 
-                // Notify the GUI thread with the result
+                if (IsDisposed) return;
                 this.Invoke((MethodInvoker)(() =>
                 {
                     if (error != null)
                         MessageBox.Show(error, "Could not load products");
                     else
-                        dataGridView1.DataSource = _db.Products.Local.ToBindingList();
+                        dataGridView1.DataSource = products;   // plain list, no live binding
 
                     UseWaitCursor = false;
                 }));

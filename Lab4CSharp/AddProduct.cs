@@ -29,59 +29,48 @@ namespace Lab4CSharp
 
         private void add_Click(object sender, EventArgs e)
         {
-            try
+            // Read and validate the controls on the GUI thread
+            int qty;
+            if (!int.TryParse(quantity.Text, out qty) || qty < 0)
             {
-                using (var db = new StoreDB2())
-                {
-                    try
-                    {
-                        
-                        var product = new Products
-                        {
-                            //ProductID = int.Parse(productID.Text),
-                            ProductName = productName.Text,
-                            ProductDescription = productDescription.Text,
-                            StoreEntryDate = arrivalDate.Value,
-                            ExpirationDate = expirationDate.Value,
-                            Quantity = int.Parse(quantity.Text)
-                        };
-                        add.Enabled = false;
-                        Task.Run(() =>
-                        {
-                            string result;
-                            try
-                            {
-                                   db.Products.Add(product);
-                                   db.SaveChanges();
-                                
-                                result = "Product added successfully!";
-                            }
-                            catch (Exception ex)
-                            {
-                                result = "An error occurred while adding the product: " + ex.Message;
-                            }
+                MessageBox.Show("Invalid input format. Please check your entries.");
+                return;
+            }
 
-                            // 3. Notify the GUI thread with the result
-                            this.Invoke((MethodInvoker)(() =>
-                            {
-                                if(result != "")
-                                MessageBox.Show(result);
-                                add.Enabled = true;
-                            }));
-                        });
-                        
-                    }
-                    catch (FormatException)
-                    {
-                        MessageBox.Show("Invalid input format. Please check your entries.");
-                        return;
-                    }
-                }
-            }
-            catch (Exception ex)
+            var product = new Products
             {
-                MessageBox.Show($"An error occurred while adding the product: {ex.Message}");
-            }
+                ProductName = productName.Text,
+                ProductDescription = productDescription.Text,
+                StoreEntryDate = arrivalDate.Value,
+                ExpirationDate = expirationDate.Value,
+                Quantity = qty
+            };
+
+            add.Enabled = false;
+
+            Task.Run(() =>
+            {
+                string result;
+                try
+                {
+                    using (var db = new StoreDB2())   // lives exactly as long as the work
+                    {
+                        db.Products.Add(product);
+                        db.SaveChanges();
+                    }
+                    result = "Product added successfully!";
+                }
+                catch (Exception ex)
+                {
+                    result = "An error occurred while adding the product: " + ex.GetBaseException().Message;
+                }
+
+                this.Invoke((MethodInvoker)(() =>
+                {
+                    MessageBox.Show(result);
+                    add.Enabled = true;
+                }));
+            });
         }
     }
 }
